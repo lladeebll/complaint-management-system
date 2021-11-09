@@ -5,7 +5,7 @@ from flask_jwt_extended import JWTManager
 
 def create_app():
 
-    app = flsk('backEnd')
+    app = flsk('server')
     app.config.from_object(f"config.{app.config['ENV']}Config")
     CORS(app)
     jwt = JWTManager(app)

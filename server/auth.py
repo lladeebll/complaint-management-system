@@ -10,28 +10,37 @@ import functools
 
 auth = Blueprint('auth', 'backEnd', url_prefix= '/')
 
-@auth.route('/register', methods = 'POST')
+@auth.route('/register', methods = ['POST'])
 def register():
     data = json.loads(request.data)
     userName = data['userName']
     pswrd = data['pass']
     name = data['name']
     phoneNo = data['phoneNo']
+    email = data['email']
+    a = data['actor']
 
-    if db.uniqueId(userName):
-        t = db.insert(d, 1, None)
-        access_token = create_access_token(t[0])
-        return jsonify(dict(variant = 'success', msg = "New account created.", accessToken = access_token, userId = t[0]))
+    if a == 'student':
+        actorDao = db.studentDao()
+        actor = student(userName , pswrd, name, phoneNo, email, [])
+
+    else:
+        actorDao = db.departmentDao()
+        actor = department(userName, name, pswrd, [])    
+
+    if actorDao.register(actor):
+        access_token = create_access_token(userName)
+        return jsonify(dict(variant = 'success', msg = "New account created.", accessToken = access_token, userId = userName))
     else:
         return jsonify(dict(variant = 'danger', msg = "Sorry User Name not available, Pick a new User Name"))
 
     return jsonify(dict(msg = 'Unknown operation', variant = 'danger'))
 
 
-@auth.route('/login', methods = 'POST')
+@auth.route('/login', methods = ['POST'])
 def login():
     data = json.loads(request.data)
-    userId = data['userName']
+    id = data['userName']
     pswrd = data['pass']
     a = data['actor']
 
@@ -40,15 +49,15 @@ def login():
     else:
         actor = db.departmentDao()
 
-    t = actor.getUser(userId)
+    t = actor.getUser(id)
 
     if t == None:
         return jsonify(dict(msg = 'Invalid username!', variant = 'danger'))
         
     elif check_password_hash(t[1], pswrd):
-        session["user_id"] = t[0]
-        access_token = create_access_token(t[0])
-        return jsonify(dict(msg = 'Successfully logged in!', variant = 'success', accessToken = access_token, userId = t[0]))
+        session["user_id"] =id 
+        access_token = create_access_token(id)
+        return jsonify(dict(msg = 'Successfully logged in!', variant = 'success', accessToken = access_token, userId = id))
         
     else:
         return jsonify(dict(msg = 'Invalid Username or password', variant = 'danger'))
@@ -56,7 +65,7 @@ def login():
     return jsonify(dict(msg = 'Unknown operation', variant = 'danger'))
 
 
-@auth.route('/logout', methods = 'GET')
+@auth.route('/logout')
 @jwt_required()
 def logout():
     session.clear()
