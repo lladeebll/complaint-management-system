@@ -3,7 +3,7 @@ from flask.helpers import url_for
 from werkzeug.security import check_password_hash
 from werkzeug.utils import redirect
 from . import db
-from .models import User
+from .models import student, department, complaint
 import json
 from flask_jwt_extended import create_access_token, jwt_required
 import functools
@@ -33,17 +33,19 @@ def login():
     data = json.loads(request.data)
     userId = data['userName']
     pswrd = data['pass']
-    actor = data['actor']
+    a = data['actor']
 
-    if actor == 'student':
-        t = studentDao.checkUserName(userId)
+    if a == 'student':
+        actor = db.studentDao()
     else:
-        t = depDao.checkUserName(userId)
+        actor = db.departmentDao()
+
+    t = actor.getUser(userId)
 
     if t == None:
         return jsonify(dict(msg = 'Invalid username!', variant = 'danger'))
         
-    elif check_password_hash(hashedPass, pswrd):
+    elif check_password_hash(t[1], pswrd):
         session["user_id"] = t[0]
         access_token = create_access_token(t[0])
         return jsonify(dict(msg = 'Successfully logged in!', variant = 'success', accessToken = access_token, userId = t[0]))

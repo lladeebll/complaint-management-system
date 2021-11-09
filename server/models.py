@@ -114,6 +114,35 @@ class student(object):
     def set_mail(self, email):
         self.__email = email
 
+    def get_complaints(self):
+        return self.__complaints
+
+    def editComplaint(self, complaint_id, title, discription):
+        for complaint in self.__complaints:
+            if complaint.getId() == complaint_id:
+                complaint.setTitle(title)
+                complaint.setDiscription(discription)
+                return True
+        return False
+
+    def deleteComplaint(self, complaint_id):
+        for complaint in self.__complaints:
+            if complaint.getId() == complaint_id:
+                self.__complaints.remove(complaint)
+                del complaint
+                return True
+        return False
+    
+    def giveFeedback(self, complaint_id, feedback, stars):
+        for complaint in self.__complaints:
+            if complaint.getId() == complaint_id:
+                complaint.setfeedback(feedback)
+                complaint.setstars(stars)
+                return True
+        return False
+
+    def add_complaint(self, complaint):
+        self.__complaints.append(complaint) 
 
     def jsonObj():
         return jsonify({
@@ -122,11 +151,9 @@ class student(object):
             "name": self.__name,
             "phno": self.__phno,
             "email": self.__email,
-            "complaints": self.__complaints
+            "complaints": [x.jsonObj() for x in self.__complaints]
         })
 
-    def add_complaint(self, complaint):
-        self.__complaints.append(complaint) 
 
 
 class department(object):
@@ -176,3 +203,25 @@ class department(object):
         for complaint in self.__complaints:
             if complaint.getId() == id:
                 complaint.setStatus(status)
+                return True
+        return False
+
+    def update_avgRating(self, stars):
+        self.__avgRating = (self.__avgRating * self.__complaintsHandled + stars) / (self.__complaintsHandled + 1)
+
+    def complaints_in_waitingList(self):
+        count = 0
+        for complaint in self.__complaints:
+            if complaint.getStatus() == "waiting":
+                count += 1
+        return count
+
+    def jsonObj():
+        return jsonify({
+            "dep_id": self.__dep_id,
+            "name": self.__name,
+            "password": self.__password,
+            "complaints": [x.jsonObj() for x in self.__complaints],
+            "complaintsHandled": self.__complaintsHandled,
+            "avgRating": self.__avgRating
+        })
