@@ -112,6 +112,12 @@ def initDb():
         cur.execute("insert into server (id, name, ip, port) values (%s, %s, %s, %s)", (i, fake.user_name(), fake.ipv4(), random.randint(1, 65535)))
         db.commit()
 
+    deps = ['water', 'electricity', 'carpentry', 'plumbing', 'paint', 'furniture']
+
+    for dep in deps:
+        cur.execute("insert into department (deptId, password, name) values (%s, %s, %s)", (dep, generate_password_hash(dep, method = 'sha256'), dep))
+        db.commit()
+    
     cur.close()
     closeDb()
 
