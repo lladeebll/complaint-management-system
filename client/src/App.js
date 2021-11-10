@@ -2,15 +2,16 @@
 import './App.css';
 import RegistrationPage from './pages/RegistrationPage';
 import LoginForm from './components/LoginForm';
+import { Container } from 'react-bootstrap';
 
 function App() {
 
 
   return (
-    <div>
+    <Container>
       {/* <RegistrationPage></RegistrationPage> */}
       <LoginForm></LoginForm>
-    </div>
+    </Container>
   );
 }
 

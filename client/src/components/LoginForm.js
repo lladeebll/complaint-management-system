@@ -1,8 +1,10 @@
 import { useForm } from "../customHooks/UseForm"
+import { Form, Button } from 'react-bootstrap';
+
 const LoginForm = () => {
 
     const [values,  handleChange]   =   useForm({
-        userId:"",
+        userName:"",
         password:"",
     })
 
@@ -11,29 +13,20 @@ const LoginForm = () => {
         console.log(values);
     }
     return (
-        <div className="container">
-            <form onSubmit={onSubmit}>
+            <Form onSubmit={onSubmit} className="w-25 m-auto mt-5">
+                <Form.Group className="mb-3">
+                    <Form.Label>Username</Form.Label>
+                    <Form.Control type="text" onChange={handleChange} name="userName" value={values.userName} placeholder="Username" />
+                </Form.Group>
 
-                <div className="input">
-                    <div className="label">
-                        <label htmlFor="userId">User ID: &nbsp;</label>
-                    </div>
-                    <div>
-                        <input name="userId" onChange={handleChange} value={values.userId} id="userId" type="text"  required/>
-                    </div>
-                </div>
-
-                <div className="input">
-                    <div className="label">
-                        <label htmlFor="password">Password: &nbsp;</label>
-                    </div>
-                    <div>
-                        <input name="password" onChange={handleChange} value={values.password} id="password" type="password"  required/>
-                    </div>
-                </div>
-                <input type="submit" value="login" />
-            </form>
-        </div>
+                <Form.Group className="mb-3">
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control type="password" onChange={handleChange} name="password" value={values.password}  placeholder="Password" />
+                </Form.Group>
+                <Button variant="primary" type="submit">
+                    Submit
+                </Button>
+            </Form>
     )
 }
 

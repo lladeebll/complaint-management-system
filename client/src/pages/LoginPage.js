@@ -1,10 +1,11 @@
-import LoginForm from "../components/LoginForm"
+import LoginForm from "../components/LoginForm";
 
 const LoginPage = () => {
     return (
-        <div>
+        <div className="d-flex justify-content-center">
             <LoginForm></LoginForm>
         </div>
+
     )
 }
 
