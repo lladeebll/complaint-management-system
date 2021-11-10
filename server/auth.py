@@ -14,19 +14,14 @@ auth = Blueprint('auth', 'backEnd', url_prefix= '/')
 def register():
     data = json.loads(request.data)
     userName = data['userName']
-    pswrd = data['pass']
-    name = data['name']
-    phoneNo = data['phoneNo']
-    email = data['email']
-    a = data['actor']
 
-    if a == 'student':
+    if data['actor'] == 'student':
         actorDao = db.studentDao()
-        actor = student(userName , pswrd, name, phoneNo, email, [])
+        actor = student(userName, data['password'], data['name'], data['phno'], data['email'], [])
 
     else:
         actorDao = db.departmentDao()
-        actor = department(userName, name, pswrd, [])    
+        actor = department(userName, data['name'], data['password'], [])    
 
     if actorDao.register(actor):
         access_token = create_access_token(userName)
@@ -41,10 +36,9 @@ def register():
 def login():
     data = json.loads(request.data)
     id = data['userName']
-    pswrd = data['pass']
-    a = data['actor']
+    pswrd = data['password']
 
-    if a == 'student':
+    if data['actor'] == 'student':
         actor = db.studentDao()
     else:
         actor = db.departmentDao()

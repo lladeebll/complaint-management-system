@@ -56,18 +56,18 @@ class departmentDao(object):
     def register(self, dept):
         deptId = dept.get_dep_id()
         
-        if self.getDepartment(deptId) is not None:
+        if self.getUser(deptId) is not None:
             return False
 
         password = generate_password_hash(dept.get_password(), method='sha256')
         name = dept.get_name()
 
-        self.__cur.execute("insert into departments (deptId, password, name) values (%s, %s, %s, %s, %s)", (deptId, password, name, email, phno))
+        self.__cur.execute("insert into department (deptId, password, name) values (%s, %s, %s)", (deptId, password, name))
         self.__db.commit()
         return True
 
     def getUser(self, deptId):
-        self.__cur.execute("select deptId, password from departments where deptId = %s",(deptId,))
+        self.__cur.execute("select deptId, password from department where deptId = %s",(deptId,))
         return self.__cur.fetchone()
 
 class complaintDao(object):
