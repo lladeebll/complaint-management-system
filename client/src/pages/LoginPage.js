@@ -1,9 +1,12 @@
+import { Container } from "react-bootstrap";
 import LoginForm from "../components/LoginForm";
 
 const LoginPage = () => {
     return (
-        <div className="d-flex justify-content-center">
+        <div>
+            <Container>
             <LoginForm></LoginForm>
+            </Container>
         </div>
 
     )

@@ -1,17 +1,18 @@
 
 import './App.css';
 import RegistrationPage from './pages/RegistrationPage';
-import LoginForm from './components/LoginForm';
-import { Container } from 'react-bootstrap';
+import NavBar from './components/NavBar';
+import LoginPage from './pages/LoginPage';
 
 function App() {
 
 
   return (
-    <Container>
+    <>
       {/* <RegistrationPage></RegistrationPage> */}
-      <LoginForm></LoginForm>
-    </Container>
+      <NavBar></NavBar>
+      <LoginPage></LoginPage>
+    </>
   );
 }
 
