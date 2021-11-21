@@ -6,8 +6,8 @@ from werkzeug.security import generate_password_hash
 from .models import student, complaint, department
 import random
 from uuid import uuid4 as generateId
-from faker import Faker
 import datetime
+from faker import Faker
 fake = Faker()
 
 def getDb():
