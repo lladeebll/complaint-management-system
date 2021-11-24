@@ -39,14 +39,61 @@ class studentDao(object):
         name = std.get_name()
         email = std.get_mail()
         phno = std.get_phno()
+        server_id = random.randint(2, 9)
+        std.set_server(server_id)
 
-        self.__cur.execute("insert into student (username, password, name, email, phoneNo, server_id) values (%s, %s, %s, %s, %s, %s)", (userId, password, name, email, phno, random.randint(2, 9)))
+        self.__cur.execute("insert into student (username, password, name, email, phoneNo, server_id) values (%s, %s, %s, %s, %s, %s)", (userId, password, name, email, phno, server_id))
         self.__db.commit()
         return True
+
+    def addComplaint(self, complaint):
+        complaintId = str(generateId())
+
+        while self.getComplaint(complaintId) is not None:
+            complaintId = str(generateId())
+
+        complaint.setId(complaintId)
+        userId = complaint.getUserId()
+        deptId = complaint.getDepId()
+        title = complaint.getTitle()
+        description = complaint.getdescription()
+        status = complaint.getStatus()
+        date = datetime.datetime.now()
+        server =  random.randint(2, 9)
+        complaint.setServer(server)
+        complaint.setDateSubmited(date)
+
+        self.__cur.execute("insert into complaint (complaintId, userId, deptId, title, description, status, date_submited, server_id) values (%s, %s, %s, %s, %s, %s, %s, %s)", (complaintId, userId, deptId, title, description, status, date, server))
+        self.__db.commit()
+        return complaintId
+
+    def getComplaint(self, complaintId):
+        self.__cur.execute("select * from complaint where complaintId = %s", (complaintId,))
+        return self.__cur.fetchone()
 
     def getUser(self, userId):
         self.__cur.execute("select username, password from student where username = %s",(userId,))
         return self.__cur.fetchone()
+    
+    def getUserDetails(self, userId):
+        self.__cur.execute("select * from student where username = %s", (userId,))
+        return self.__cur.fetchone()
+
+    def getComplaints(self, userId):
+        self.__cur.execute("select * from complaint where userId = %s", (userId,))
+        return self.__cur.fetchall()
+
+    def updateComplaint(self, complaintId, description):
+        self.__cur.execute("update complaint set description = %s where complaintId = %s", (description, complaintId))
+        self.__db.commit()
+
+    def updateFeedback(self, complaintId, feedback, stars):
+        self.__cur.execute("update complaint set feedback = %s, stars = %s where complaintId = %s", (feedback, stars, complaintId))
+        self.__db.commit() 
+
+    def __del__(self):
+        self.__cur.close()
+        self.__db.close()
 
 class departmentDao(object):
     def __init__(self):
@@ -66,40 +113,33 @@ class departmentDao(object):
         self.__db.commit()
         return True
 
+    def getComplaint(self, complaintId):
+        self.__cur.execute("select * from complaint where complaintId = %s", (complaintId,))
+        return self.__cur.fetchone()
+
     def getUser(self, deptId):
         self.__cur.execute("select deptId, password from department where deptId = %s",(deptId,))
         return self.__cur.fetchone()
 
-class complaintDao(object):
-    def __init__(self):
-        self.__db = getDb()
-        self.__cur = self.__db.cursor()
+    def getUserDetails(self, deptId):
+        self.__cur.execute("select * from department where deptId = %s", (deptId,))
+        return self.__cur.fetchone()
 
-    def addComplaint(self, complaint):
-        complaintId = generateId()
-        userId = complaint.getUserId()
-        deptId = complaint.getDepId()
-        title = complaint.getTitle()
-        description = complaint.getDiscription()
-        status = complaint.getStatus()
-        date = datetime.datetime.now()
-
-        self.__cur.execute("insert into complaints (complaintId, userId, deptId, title, description, status, date, server_id) values (%s, %s, %s, %s, %s, %s, %s, %s)", (complaintId, userId, deptId, title, description, status, date, random.randint(2, 9)))
-        self.__db.commit()
-        return complaintId
-
-    def updateComplaint(self, complaintId, description):
-        self.__cur.execute("update complaints set description = %s where complaintId = %s", (description, complaintId))
-        self.__db.commit()
+    def getComplaints(self, deptId):
+        self.__cur.execute("select * from complaint where deptId = %s", (deptId,))
+        return self.__cur.fetchall()
 
     def updateStatus(self, complaintId, status):
-        self.__cur.execute("update complaints set status = %s where complaintId = %s", (status, complaintId))
-        self.__db.commit()
+        try:
+            self.__cur.execute("update complaint set status = %s where complaintId = %s", (status, complaintId))
+            self.__db.commit()
+            return True
+        except:
+            return False
 
-    def getfeedback(self, complaintId, feedback, stars):
-        self.__cur.execute("update complaints set feedback = %s, stars = %s where complaintId = %s", (feedback, stars, complaintId))
-        self.__db.commit() 
-
+    def __del__(self):
+        self.__cur.close()
+        self.__db.close()
 
 def initDb():
     db = getDb()

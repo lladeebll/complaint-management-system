@@ -6,8 +6,8 @@ drop table if exists server;
 create table if not exists department(
     deptId text primary key not null,
     name text not null,
-    password text not null,
     rating float default 0,
+    password text not null,
     complaintsHandled int default 0,
     server_id int default 1 
 );

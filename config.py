@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 class Config(object):
     DEBUG = False
@@ -8,7 +9,7 @@ class Config(object):
 
     DB_NAME = os.environ['DATABASE_URL']
     SESSION_TYPE = 'filesystem'
-    JWT_ACCESS_TOKEN_EXPIRES = False
+    ACCESS_TOKEN_LIFETIME: timedelta(days=1)
 
     SESSION_COOKIE_SECURE = True
 

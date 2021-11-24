@@ -1,7 +1,6 @@
 from flask import Flask as flsk, render_template
 from flask_cors import CORS
 from flask_jwt_extended import JWTManager
-  
 
 def create_app():
 
@@ -13,8 +12,11 @@ def create_app():
     from . import auth
     app.register_blueprint(auth.auth)
 
-    # from . import api
-    # app.register_blueprint(api.api)
+    from . import student_api
+    app.register_blueprint(student_api.api)
+
+    from . import department_api 
+    app.register_blueprint(department_api.api)
 
     from . import db
     db.init_app(app)

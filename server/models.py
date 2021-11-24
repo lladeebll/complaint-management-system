@@ -2,15 +2,17 @@ from flask import jsonify
 
 class complaint(object):
 
-    def __init__(self, id, title, discription, depId, userId):
+    def __init__(self, id, title, description, status, date_submited, feedback, stars, depId, userId, server):
         self.__id = id
         self.__title = title
-        self.__discription = discription
-        self.__status = "waiting" 
+        self.__description = description
+        self.__status = status 
         self.__depId = depId
         self.__userId = userId
-        self.__feedback = ''
-        self.__stars = -1
+        self.__feedback = feedback 
+        self.__stars = stars 
+        self.__date_submited = date_submited
+        self.__server = server
 
     def getId(self):
         return self.__id
@@ -18,8 +20,8 @@ class complaint(object):
     def getTitle(self):
         return self.__title
 
-    def getDiscription(self):
-        return self.__discription
+    def getdescription(self):
+        return self.__description
 
     def getStatus(self):
         return self.__status
@@ -36,14 +38,20 @@ class complaint(object):
     def getstars(self):
         return self.__stars
 
+    def getDateSubmited(self):
+        return self.__date_submited
+
+    def getServer(self):
+        return self.__server
+
     def setId(self, id):
         self.__id = id
 
     def setTitle(self, title):
         self.__title = title
 
-    def setDiscription(self, discription):
-        self.__discription = discription
+    def setdescription(self, description):
+        self.__description = description
 
     def setStatus(self, status):
         self.__status = status
@@ -60,11 +68,23 @@ class complaint(object):
     def setstars(self, stars):
         self.__stars = stars
 
-    def jsonObj():
+    def setDateSubmited(self, date_submited):
+        self.__date_submited = date_submited
+
+    def setServer(self, server):
+        self.__server = server
+
+    def stringObj(self):
+        return {
+            "complaint ID: " : str(self.__id),
+            "title: " : str(self.__title)
+        } 
+
+    def jsonObj(self):
         return jsonify({
             "id": self.__id,
             "title": self.__title,
-            "discription": self.__discription,
+            "description": self.__description,
             "status": self.__status,
             "depId": self.__depId,
             "userId": self.__userId,
@@ -75,14 +95,14 @@ class complaint(object):
 
 class student(object):
 
-    def __init__(self, user_id, password, name, phno, mail, complaints):
+    def __init__(self, user_id, name, mail, password, phno, server, complaints):
         self.__user_id = user_id
         self.__password = password
         self.__name = name
         self.__phno = phno
         self.__email = mail
+        self.__server = server
         self.__complaints = complaints
-   
 
     def get_user_id(self):
         return self.__user_id
@@ -99,6 +119,9 @@ class student(object):
     def get_mail(self):
         return self.__email
 
+    def get_server(self):
+        return self.__server
+
     def set_user_id(self, user_id):
         self.__user_id = user_id
 
@@ -113,15 +136,18 @@ class student(object):
 
     def set_mail(self, email):
         self.__email = email
+    
+    def set_server(self, server):
+        self.__server = server
 
     def get_complaints(self):
         return self.__complaints
 
-    def editComplaint(self, complaint_id, title, discription):
+    def editComplaint(self, complaint_id, title, description):
         for complaint in self.__complaints:
             if complaint.getId() == complaint_id:
                 complaint.setTitle(title)
-                complaint.setDiscription(discription)
+                complaint.setdescription(description)
                 return True
         return False
 
@@ -141,30 +167,30 @@ class student(object):
                 return True
         return False
 
-    def add_complaint(self, complaint):
+    def addComplaint(self, complaint):
         self.__complaints.append(complaint) 
 
-    def jsonObj():
+    def jsonObj(self):
         return jsonify({
             "user_id": self.__user_id,
-            "password": self.__password,
             "name": self.__name,
             "phno": self.__phno,
             "email": self.__email,
-            "complaints": [x.jsonObj() for x in self.__complaints]
+            "server" : self.__server,
+            "complaints": [x.stringObj() for x in self.__complaints]
         })
 
 
 
 class department(object):
 
-    def __init__(self, dep_id, name, password, complaints):
+    def __init__(self, dep_id, name, rating, password, complaintsHandled, complaints):
         self.__dep_id = dep_id
         self.__name = name
         self.__complaints = complaints
         self.__password = password
-        self.__complaintsHandled = 0
-        self.__avgRating = 0
+        self.__complaintsHandled = complaintsHandled 
+        self.__avgRating = rating 
 
     def get_dep_id(self):
         return self.__dep_id
@@ -183,6 +209,9 @@ class department(object):
 
     def get_avgRating(self):
         return self.__avgRating
+
+    def get_server(self):
+        return 1
 
     def set_dep_id(self, dep_id):
         self.__dep_id = dep_id
@@ -216,12 +245,13 @@ class department(object):
                 count += 1
         return count
 
-    def jsonObj():
+    def jsonObj(self):
         return jsonify({
             "dep_id": self.__dep_id,
             "name": self.__name,
-            "password": self.__password,
-            "complaints": [x.jsonObj() for x in self.__complaints],
+            "complaints": [x.stringObj() for x in self.__complaints],
             "complaintsHandled": self.__complaintsHandled,
-            "avgRating": self.__avgRating
+            "avgRating": self.__avgRating,
+            "complaints_in_waitingList": self.complaints_in_waitingList(),
+            "server" : 1
         })
