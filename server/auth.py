@@ -22,7 +22,7 @@ def register():
         app.student = actor
     else:
         actorDao = db.departmentDao()
-        actor = department(userName, data['name'], data['password'], [])    
+        actor = department(userName, data['name'], 0, data['password'], 0, []) 
         app.department = actor
 
     if actorDao.register(actor):
