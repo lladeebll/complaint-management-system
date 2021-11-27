@@ -2,6 +2,19 @@
     {
         "id": "1",
         "title": "Sample title 1",
-        "description": "Sample description 1"
+        "description": "Sample description 1",
+        "status": "rectified"
+    },
+    {
+        "id": "2",
+        "title": "Sample title 2",
+        "description": "Sample description 2",
+        "status": "rejected"
+    },
+    {
+        "id": "3",
+        "title": "Sample title 3",
+        "description": "Sample description 3",
+        "status": "pending"
     }
 ]

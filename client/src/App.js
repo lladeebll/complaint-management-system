@@ -3,7 +3,7 @@ import { Container } from "react-bootstrap";
 import './App.css';
 import RegistrationPage from './pages/RegistrationPage';
 import LoginPage from './pages/LoginPage';
-import StudentPage from './pages/StudentPage';
+import HomePage from './pages/HomePage';
 import NavBar from './components/NavBar';
 
 
@@ -17,7 +17,8 @@ function App() {
           <Container className="container">
             <Routes>
               <Route path='/register' element={<RegistrationPage/>} /> 
-              <Route path='/studentpage' element={<StudentPage/>} /> 
+              <Route path='/home/' element={<HomePage/>} /> 
+              <Route path='/home/complaint' element={<HomePage/>} />
               <Route path='/' element={<LoginPage/>} />    
             </Routes>
           </Container>

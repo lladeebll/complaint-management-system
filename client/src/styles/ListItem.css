@@ -1,0 +1,61 @@
+.complaint-item {
+    align-items: center;
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+  }
+
+  .complaint-item:hover {
+    background: rgb(247, 247, 247);
+  }
+
+  .complaint-title{
+    font-weight: 450;
+    font-size: 20px;
+    color: #080808;
+    width: 100%;
+  }
+
+  .complaint-details{
+    display: flex;
+    font-size: 15px;
+    width: 100%;
+    color: rgba(17, 16, 16, 0.534);
+
+  }
+
+  .complaint-status{
+    display: flex;
+    align-items: center;
+    left: 0;
+  }
+
+  .status-icon{
+
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    margin-right: 5px;
+  }
+
+
+  .rectified .status-icon{
+    background-color: rgb(31, 219, 31);
+  }
+  .pending .status-icon{
+    background-color: rgb(59, 209, 255);
+  }
+  .rejected .status-icon{
+    background-color: rgb(244, 101, 101);
+  }
+
+  .rectified .status-text:after{
+    content: "Rectified";
+  }
+  .pending .status-text:after{
+    content: "Pending";
+  }
+  .rejected .status-text:after{
+    content: "Rejected";
+  }
+ 

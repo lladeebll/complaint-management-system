@@ -1,6 +1,6 @@
+import {Link} from 'react-router-dom';
 import React from 'react';
 import Complaints from '../constants/complaints.json';
-import { Table } from 'react-bootstrap';
 import ListItem from "./ListItem";
 
 
@@ -8,20 +8,17 @@ const ComplaintList = () => {
 
     return (
         <>
-        <Table striped bordered hover>
-            <tbody>
                 {
                     Complaints.map((complaint)=>{
                         return (
-
-                            <ListItem complaint={complaint} />
+                            <Link to={`/home/complaint?id=${complaint.id}`} className="text-decoration-none">
+                                <ListItem complaint={complaint} />
+                            </Link>
+                            
 
                         )
                     })
                 }
-                
-            </tbody>
-            </Table>
         </>
     )
 }
