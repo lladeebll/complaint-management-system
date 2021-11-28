@@ -9,7 +9,7 @@ const SearchComponent = (props) => {
 
     return (
         <InputGroup className="w-100 mr-0">
-        <InputGroup.Text className="bg-info text-white">
+        <InputGroup.Text className="bg-dark text-white">
                 <FontAwesomeIcon icon={faSearch} />
         </InputGroup.Text>
         <FormControl placeholder="Search complaint ..." onChange={props.nameChange} />  
