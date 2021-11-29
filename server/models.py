@@ -92,7 +92,6 @@ class complaint(object):
             "stars": self.__stars
         })
 
-
 class student(object):
 
     def __init__(self, user_id, name, mail, password, phno, server, complaints):
@@ -143,10 +142,9 @@ class student(object):
     def get_complaints(self):
         return self.__complaints
 
-    def editComplaint(self, complaint_id, title, description):
+    def editComplaint(self, complaint_id, description):
         for complaint in self.__complaints:
             if complaint.getId() == complaint_id:
-                complaint.setTitle(title)
                 complaint.setdescription(description)
                 return True
         return False
@@ -155,9 +153,10 @@ class student(object):
         for complaint in self.__complaints:
             if complaint.getId() == complaint_id:
                 self.__complaints.remove(complaint)
+                id = complaint.getDepId()
                 del complaint
-                return True
-        return False
+                return id 
+        return None 
     
     def giveFeedback(self, complaint_id, feedback, stars):
         for complaint in self.__complaints:
@@ -179,6 +178,10 @@ class student(object):
             "server" : self.__server,
             "complaints": [x.stringObj() for x in self.__complaints]
         })
+
+    def __del__(self):
+        for complaint in self.__complaints:
+            del complaint
 
 
 
@@ -255,3 +258,7 @@ class department(object):
             "complaints_in_waitingList": self.complaints_in_waitingList(),
             "server" : 1
         })
+
+    def __del__(self):
+        for complaint in self.__complaints:
+            del complaint

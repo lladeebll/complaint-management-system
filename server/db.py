@@ -87,9 +87,27 @@ class studentDao(object):
         self.__cur.execute("update complaint set description = %s where complaintId = %s", (description, complaintId))
         self.__db.commit()
 
+    def deleteComplaint(self, complaintId):
+        self.__cur.execute("delete from complaint where complaintId = %s", (complaintId,))
+        self.__db.commit()
+
+    def rateDepartment(self, deptId, stars):
+        self.__cur.execute("select rating, complaintshandled from department where deptid = %s", (deptId,))
+        data = self.__cur.fetchone()
+        rating = data[0]
+        complaintshandled = data[1]
+        rating = (rating * complaintshandled + stars) / (complaintshandled + 1)
+        complaintshandled += 1
+        self.__cur.execute("update department set rating = %s, complaintshandled = %s where deptid = %s", (rating, complaintshandled, deptId))
+        self.__db.commit()
+
     def updateFeedback(self, complaintId, feedback, stars):
         self.__cur.execute("update complaint set feedback = %s, stars = %s where complaintId = %s", (feedback, stars, complaintId))
         self.__db.commit() 
+
+    def getDepartments(self):
+        self.__cur.execute("select deptid, name from department")
+        return self.__cur.fetchall()
 
     def __del__(self):
         self.__cur.close()
