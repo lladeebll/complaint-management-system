@@ -9,7 +9,7 @@ const ComplaintList = ({list}) => {
 
     useEffect(() => {
         console.log(list);
-    }, [])
+    }, [list])
     return (
         <>
                 {

@@ -1,30 +1,65 @@
 import {React, useState} from 'react';
 import { useForm } from '../customHooks/UseForm';
 import { Form, Button, Modal, FloatingLabel } from 'react-bootstrap';
+import  {   useEffect} from 'react';
 
 
-const AddComplaint = () => {
+const AddComplaint = ({departments}) => {
 
+    async function postComplaint(url="http://localhost:5001/api/student/addcomplaint",data) {
+        // Default options are marked with *
+        const response = await fetch(url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      }
+    useEffect(() => {
+        console.log(departments);
+        
+    }, [departments])
     const [values,  handleChange]   =   useForm({
         title:"",
-        department:"",
+        depId:"",
         description:""
     })
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
         setShow(false);
-        values.title="";
-        values.department="";
-        values.description="";
     }
     const handleShow = () => setShow(true);
 
-    const onSubmit   =   (e)  =>
+    const onSubmit   =   async  (e)  =>
     {
+        if(values.depId==='')
+        {
+            alert('Select proper Department');
+            e.preventDefault();
+            return
+
+        }
+        if(values.title==='')
+        {
+            alert('Enter proper Title');
+            e.preventDefault();
+            return
+        }
         e.preventDefault();
+        // console.log(values);
+        let res =   await   postComplaint("http://localhost:5001/api/student/addcomplaint",values);
+        console.log(res);
         setShow(false);
-        console.log(values);
+        if(res.message!=='Complaint added successfully')
+        {
+            alert('Task Couldn\'t be added');
+        }
     }
     return (
         <>
@@ -40,9 +75,13 @@ const AddComplaint = () => {
                 </Modal.Header>
                 <Modal.Body>
                     <FloatingLabel label="Department">
-                        <Form.Select className="mb-3" name="department" value={values.department} onChange={handleChange}>
-                        <option value="1">Sample1</option>
-                        <option value="2">Sample2</option>
+                        <Form.Select className="mb-3" name="depId" value={values.depId} onChange={handleChange}>
+                        {/* <option value="1">Sample1</option>
+                        <option value="2">Sample2</option> */}
+                        <option value="">Select Department</option>
+                        {departments.map((department)=>(
+                            <option key={department[0]} value={department[0]}>{department[1]}</option>
+                            ))}
                         </Form.Select>
                     </FloatingLabel>
                     <Form.Group className="mb-3">

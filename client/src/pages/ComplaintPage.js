@@ -7,7 +7,7 @@ import { useEffect } from 'react';
 
 const ComplaintPage = (props) => {
 
-    const [id] = useState(0);
+    const [id,setId] = useState(0);
 
     return (
         <>

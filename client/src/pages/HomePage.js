@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router';
 const HomePage = ({logoutFunct,actor}) => {
     const navigate  =   useNavigate()
     const [list, setlist] = useState([]);
+    const [departments, setdepartments] = useState([[]]);
     function routeLogin() {
         logoutFunct();
         navigate("../", { replace: true });
@@ -34,20 +35,42 @@ const HomePage = ({logoutFunct,actor}) => {
         else
         {
             routeLogin()
-            return;
+            return null;
         }
       }
 
-    useEffect(() => {
+          async function getDepartments(url="http://localhost:5001/api/student/addcomplaint") {
+        // Default options are marked with *
+        const response = await fetch(url, {
+          method: 'GET', // *GET, POST, PUT, DELETE, etc.
+          headers: {
+            // 'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
+
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+        //   body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      }
+    const initialCall =  async () => {
         if(!localStorage.getItem('accessToken'))
         {
             routeLogin();
             return
         }
-        getComplaint().then((x)=>{
-            // console.log(x);
-            setlist(x.complaints) 
-        })
+        let list1;
+        list1 =  await getComplaint();
+        setlist(list1);
+        if(actor==='student')
+        {
+          let departments1;
+          departments1  = await getDepartments()
+          setdepartments(departments1);
+        }
+    }
+    useEffect(()=>{
+      initialCall()
     }, [])
     return (
         <>
@@ -55,7 +78,7 @@ const HomePage = ({logoutFunct,actor}) => {
                 <Col sm={8}><SearchComponent/></Col>
                 <Col className="d-flex justify-content-end"><FilterComponent/></Col>
             </Row>
-            {actor==='student'&&<AddComplaint/>}
+            {actor==='student'&&<AddComplaint departments={departments}/>}
             <ComplaintList list={list}/>
         </>
 
