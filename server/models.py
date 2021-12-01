@@ -77,7 +77,8 @@ class complaint(object):
     def stringObj(self):
         return {
             "complaint ID: " : str(self.__id),
-            "title: " : str(self.__title)
+            "title: " : str(self.__title),
+            "status: " : str(self.__status)
         } 
 
     def jsonObj(self):
