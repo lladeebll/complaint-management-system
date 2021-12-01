@@ -4,7 +4,7 @@ import { Form, Button } from 'react-bootstrap';
 import {useNavigate } from 'react-router-dom';
 
 
-const RegistrationForm = () => {
+const RegistrationForm = ({loginFunct,setActor}) => {
     let navigate = useNavigate();
 
     const baseAddress='http://localhost:5001/register'
@@ -23,7 +23,7 @@ const RegistrationForm = () => {
         email:"",
         actor:"student"
     })
-    const accessToken='';
+    // const accessToken='';
     const onSubmit   =   (e)  =>
     {
         console.log(values);
@@ -98,6 +98,9 @@ const RegistrationForm = () => {
                 {
                     // accessToken=x.accessToken;
                     localStorage.setItem('accessToken',x.accessToken);
+                    localStorage.setItem('actor',values.actor);
+                    setActor(values.actor);
+                    loginFunct();
                     routeHome();
                 }
                 else

@@ -2,10 +2,14 @@ import {Link} from 'react-router-dom';
 import React from 'react';
 import Complaints from '../constants/complaints.json';
 import ListItem from "./ListItem";
+import { useEffect } from 'react';
 
 
-const ComplaintList = () => {
+const ComplaintList = ({list}) => {
 
+    useEffect(() => {
+        console.log(list);
+    }, [])
     return (
         <>
                 {

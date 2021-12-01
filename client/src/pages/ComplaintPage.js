@@ -2,6 +2,7 @@ import {React, useState} from 'react';
 import EditComplaint from "../components/EditComplaint";
 import RatingComponent from "../components/RatingComponent";
 import Complaints from '../constants/complaints.json';
+import { useEffect } from 'react';
 
 
 const ComplaintPage = (props) => {

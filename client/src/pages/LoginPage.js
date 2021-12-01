@@ -1,9 +1,9 @@
 import LoginForm from "../components/LoginForm";
 
-const LoginPage = () => {
+const LoginPage = ({loginFunct,setActor}) => {
     return (
         <div>
-            <LoginForm></LoginForm>
+            <LoginForm loginFunct={()=>loginFunct() } setActor={(actor)=>setActor(actor)}></LoginForm>
         </div>
 
     )

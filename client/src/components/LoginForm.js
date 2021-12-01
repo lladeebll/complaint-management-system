@@ -2,7 +2,7 @@ import { useForm } from "../customHooks/UseForm"
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router";
 
-const LoginForm = () => {
+const LoginForm = ({loginFunct,setActor}) => {
     const navigate=useNavigate()
     const baseAddress='http://localhost:5001/login'
 
@@ -42,7 +42,12 @@ const LoginForm = () => {
                 if(x.variant==='success')
                 {
                     // accessToken=x.accessToken;
+                    console.log(x);
+
                     localStorage.setItem('accessToken',x.accessToken);
+                    localStorage.setItem('actor',values.actor);
+                    setActor(values.actor);
+                    loginFunct();
                     routeHome();
                 }
                 else

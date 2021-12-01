@@ -3,18 +3,22 @@ import {Link} from 'react-router-dom';
 
 
 
-const NavBar = (props) => {
-
+const NavBar = ({log,logoutFunct}) => {
 
     return (
       <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Navbar.Brand as={Link} to="/">CMS</Navbar.Brand>
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
         <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
-          <Nav>
+          {!log&&<Nav>
             <Nav.Link as={Link} to="/">Login</Nav.Link>
             <Nav.Link as={Link} to="/register">Register</Nav.Link>
-          </Nav>
+          </Nav>}
+          {log&&
+            <Nav>
+              <Nav.Link as={Link} onClick={()=>logoutFunct()} to="/">Logout</Nav.Link>
+            </Nav>
+          }
         </Navbar.Collapse>
       </Navbar>
     )
