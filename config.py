@@ -9,7 +9,7 @@ class Config(object):
 
     DB_NAME = os.environ['DATABASE_URL']
     SESSION_TYPE = 'filesystem'
-    JWT_ACCESS_TOKEN_EXPIRES= timedelta(days=1)
+    JWT_ACCESS_TOKEN_LIFETIME = timedelta(days=1)
 
     SESSION_COOKIE_SECURE = True
 
