@@ -170,6 +170,12 @@ class student(object):
     def addComplaint(self, complaint):
         self.__complaints.append(complaint) 
 
+    def getComplaintDetails(self, complaint_id):
+        for complaint in self.__complaints:
+            if complaint.getId() == complaint_id:
+                return complaint.jsonObj()
+        return None
+
     def jsonObj(self):
         return jsonify({
             "user_id": self.__user_id,
