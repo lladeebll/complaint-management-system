@@ -3,6 +3,8 @@
     background: #fff;
     border-radius: 5px;
     box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.1);
+    /* display: flex; */
+    /* padding: 30px; */
   }
 
   .complaint-item:hover {
@@ -42,7 +44,7 @@
   .rectified .status-icon{
     background-color: rgb(31, 219, 31);
   }
-  .pending .status-icon{
+  .waiting .status-icon{
     background-color: rgb(59, 209, 255);
   }
   .rejected .status-icon{
@@ -52,10 +54,16 @@
   .rectified .status-text:after{
     content: "Rectified";
   }
-  .pending .status-text:after{
+  .waiting .status-text:after{
     content: "Pending";
   }
   .rejected .status-text:after{
     content: "Rejected";
   }
+  /* .right-align
+  {
+    justify-self: end;
+    align-self:end;
+  } */
+
  
