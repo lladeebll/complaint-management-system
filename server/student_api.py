@@ -11,6 +11,16 @@ api = Blueprint('stdApi', 'backEnd', url_prefix= '/api/student')
 def getComplaints():
     return app.student.jsonObj()
 
+@api.route('/getdescriptions', methods = ['POST'])
+@jwt_required()
+def getDescriptions():
+    id = request.json['complaint_id']
+    res = app.student.getComplaintDetails(id)
+    if res:
+        return res, 200
+    else:
+        return jsonify({"message": "No complaint found"}), 400
+
 @api.route('/addcomplaint', methods = ['GET','POST'])
 @jwt_required()
 def addComplaint():
