@@ -21,9 +21,18 @@ def getDescriptions():
     else:
         return jsonify({"message": "No complaint found"}), 400
 
-@api.route('/editstatus', methods = ['POST'])
+@api.route('/editstatus', methods = ['GET', 'POST'])
 @jwt_required()
 def editStatus():
+    if request.method == 'GET':
+        statuses = [
+            {'pending': 'secondary'},
+            {'onProcess': 'info'},
+            {'resolved': 'success'},
+            {'rejected': 'danger'}
+        ]
+        return jsonify(statuses), 200
+
     data = request.get_json()
     id = data['id']
     status = data['status']
