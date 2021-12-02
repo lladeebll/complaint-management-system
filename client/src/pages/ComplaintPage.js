@@ -1,10 +1,12 @@
 import EditComplaint from "../components/EditComplaint";
 import RatingComponent from "../components/RatingComponent";
-import Complaints from '../constants/complaints.json';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from "react-router";
 import EditStatusComponent from "../components/EditStatusComponent";
+import BackButton from "../components/BackButton";
+import DeleteComplaint from "../components/DeleteComplaint";
+import '../styles/TitleStatus.css'
 
 const ComplaintPage = ({logoutFunct,actor}) => {
     const navigate  =   useNavigate()
@@ -64,12 +66,27 @@ const ComplaintPage = ({logoutFunct,actor}) => {
 
     return (
         <>
-            <h2 className="pl-0 mt-4">{complaint.title}</h2>
+            <BackButton/>
+            <div className="w-50 m-auto">
+            <h2 className="pl-0 my-4">{complaint.title}<span className={"title-status "+complaint.status}></span></h2>
+            <p>
             {complaint.description}
-            {actor==='student'&&<EditComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/>}
+            </p>
+            {actor==='student'&&complaint.status==='pending'&&
+            <div className="d-flex mt-5 justify-content-end">
+                <EditComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/>
+                <DeleteComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} />
+            </div>
+            }
             {actor==='student'&&complaint.status==='resolved'&&<RatingComponent  complaint={complaint} routeLogin={()=>routeLogin()}/>}
-            {actor==='department'&&<EditStatusComponent complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/> }
+            {actor==='department'&&
+            <div className="d-flex mt-5 justify-content-end">
+                <EditStatusComponent complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/> 
+            </div>
+            }
+            </div>
         </>
+
 
     )
 }

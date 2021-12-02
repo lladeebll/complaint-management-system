@@ -45,8 +45,8 @@ const RatingComponent = ({complaint,routeLogin}) => {
       }
     return (
         <>
-            <Card className="w-25 mt-3">
-            <Card.Header>Feedback</Card.Header>
+            <Card className="mt-5 text-center">
+            <Card.Header className="bg-dark text-white">Feedback</Card.Header>
             <Card.Body>
                 <Card.Text>
                  Rate from 1-5

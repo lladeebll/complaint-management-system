@@ -8,12 +8,49 @@ import { useNavigate } from 'react-router';
 
 const HomePage = ({logoutFunct,actor}) => {
     const navigate  =   useNavigate()
-    const [list, setlist] = useState([]);
+    const [list, setlist] = useState({
+      "complaints":[]
+    });
+    const [search,setsearch] = useState("",);
+    const [filter,setfilter] = useState({
+      pending:true,
+      onProcess:true,
+      resolved:true,
+      rejected:true
+    },);
+    const [filteredlist, setfilteredlist] = useState({
+      "complaints":[]
+    });
     const [departments, setdepartments] = useState([[]]);
     function routeLogin() {
         logoutFunct();
         navigate("../", { replace: true });
       }
+
+  async function nameChange(e){
+    setsearch(e.target.value);
+  }
+
+  async function statusChange(e){
+    setfilter(prevstate=>({
+      ...prevstate,
+      [e.target.value]:e.target.checked
+    }));
+    
+  }
+
+  async function filterComplaints(){
+    let complaints1 = list.complaints.filter((complaint)=>{
+      return (
+               ((search==="")||(complaint['title: '].toLowerCase().startsWith(search.toLowerCase()))) &&
+               (filter[complaint['status: ']])
+              )
+    })
+    setfilteredlist(prevstate=>({
+      ...prevstate,
+      complaints:complaints1
+    }));
+  }
 
     async function getComplaint(url=actor==='student'?"http://localhost:5001/api/student/getcomplaints":"http://localhost:5001/api/department/getcomplaints") {
         const response = await fetch(url, {
@@ -54,6 +91,7 @@ const HomePage = ({logoutFunct,actor}) => {
         let list1;
         list1 =  await getComplaint();
         setlist(list1);
+        setfilteredlist(list1);
         if(actor==='student')
         {
           let departments1;
@@ -62,16 +100,21 @@ const HomePage = ({logoutFunct,actor}) => {
         }
     }
     useEffect(()=>{
-      initialCall()
+      initialCall();
     }, [])
+    useEffect(()=>{
+      filterComplaints();
+    }, [search,filter])
     return (
         <>
             <Row className="mt-4">
-                <Col sm={8}><SearchComponent/></Col>
-                <Col className="d-flex justify-content-end"><FilterComponent/></Col>
+                <Col sm={7}><SearchComponent  nameChange={nameChange} /></Col>
+                <Col className="d-flex justify-content-end"><FilterComponent statusChange={statusChange}/></Col>
             </Row>
             {actor==='student'&&<AddComplaint initialCall={()=>initialCall()} departments={departments} routeLogin={()=>routeLogin()}/>}
-            <ComplaintList  actor={actor} list={list}  initialCall={()=>initialCall()} routeLogin={()=>routeLogin()}/>
+            {(filteredlist.complaints.length&&<ComplaintList  actor={actor} list={filteredlist} />) ||
+            <i>No Data found</i>}
+            
         </>
 
     )

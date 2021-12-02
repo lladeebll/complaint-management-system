@@ -1,41 +1,13 @@
 import {Link} from 'react-router-dom';
 import React from 'react';
-import Complaints from '../constants/complaints.json';
 import ListItem from "./ListItem";
 import { useEffect } from 'react';
-import {Button} from 'react-bootstrap'
-import '../styles/ComplaintList.css'
 
 
 
-const ComplaintList = ({actor,  list,initialCall,routeLogin}) => {
+const ComplaintList = ({actor,  list}) => {
 
-    const deleteFunct=  async   (id)=>{
-        console.log(id);
-        let res =   await   postDelete('http://localhost:5001/api/student/deletecomplaint',{id:id})
-        console.log(res);
-        if(res.message!=='Complaint deleted successfully')
-        {
-            routeLogin();
-        }
-        else
-        {
-            initialCall();
-        }
-    }
-    async function postDelete(url, data) {
-        // Default options are marked with *
-        const response = await fetch(url, {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        return response.json(); // parses JSON response into native JavaScript objects
-      }
+    
     useEffect(() => {
         console.log(list);
     }, [list])
@@ -49,7 +21,6 @@ const ComplaintList = ({actor,  list,initialCall,routeLogin}) => {
                                     <Link className="col-8" to={`/home/complaint?id=${complaint['complaint ID: ']}`} className="text-decoration-none">
                                         <ListItem className="col-8" key={complaint['complaint ID: ']} complaint={complaint} />
                                     </Link>
-                                    {actor==='student'&&<Button className="col-2" variant="danger" onClick={()=>deleteFunct(complaint['complaint ID: '])}>Delete</Button>}
                                 </div>
                             </div>
 

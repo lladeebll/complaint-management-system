@@ -1,0 +1,36 @@
+.title-status{
+    border: 2px solid;
+    border-radius: 10px;
+    padding: 5px;
+    font-size: 10px;
+    color: rgb(65, 65, 65);
+    position: relative;
+    bottom: 7px;
+    left: 5px;
+}
+
+.title-status.resolved{
+    border-color: rgb(31, 219, 31);
+  }
+.title-status.pending{
+    border-color: rgb(59, 209, 255);
+  }
+.title-status.rejected{
+    border-color: rgb(244, 101, 101);
+  }
+.title-status.onProcess{
+    border-color: rgb(242, 244, 101);
+  }
+
+.title-status.resolved:after{
+    content: "Resolved";
+  }
+.title-status.pending:after{
+    content: "Pending";
+  }
+.title-status.rejected:after{
+    content: "Rejected";
+  }
+.title-status.onProcess:after{
+    content: "On Process";
+  }

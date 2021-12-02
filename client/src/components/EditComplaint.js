@@ -74,12 +74,10 @@ const EditComplaint = (props) => {
 
     return (
         <>
-        <div className="d-flex mt-3 justify-content-end">
-        <Button variant="primary" onClick={handleShow} className="mr-0 mt-3">
+        <Button variant="primary" onClick={handleShow} className="m-3 px-3">
         Edit
         </Button>
-        </div>
-        <Modal show={show} onHide={handleClose} centered>
+        <Modal show={show} onHide={handleClose} centered size="lg">
             <Form onSubmit={onSubmit}>
                 <Modal.Header closeButton>
                 <Modal.Title>Edit Complaint</Modal.Title>

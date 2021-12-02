@@ -102,11 +102,9 @@ const EditStatusComponent = ({complaint,logoutFunct,logID}) => {
 
     return (
         <>
-        <div className="d-flex mt-3 justify-content-end">
         <Button variant="primary" onClick={handleShow} className="mr-0 mt-3">
         Edit Status
         </Button>
-        </div>
         <Modal show={show} onHide={handleClose} centered>
             <Form onSubmit={onSubmit}>
                 <Modal.Header closeButton>

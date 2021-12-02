@@ -1,6 +1,7 @@
 import { useForm } from "../customHooks/UseForm"
 import { Form, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router";
+import { useState } from "react";
 
 const LoginForm = ({loginFunct,setActor}) => {
     const navigate=useNavigate()
@@ -10,6 +11,12 @@ const LoginForm = ({loginFunct,setActor}) => {
         userName:"",
         password:"",
         actor:"student"
+    })
+
+    const [errors,setErrors] = useState({
+        username:"",
+        password:"",
+        final:""
     })
 
     function routeHome() {
@@ -34,8 +41,20 @@ const LoginForm = ({loginFunct,setActor}) => {
         e.preventDefault()
         if(values.userName===''||values.password==='')
         {
-            alert("Please fill appropriately")
-            return
+
+            let usernameError="",passwordError ="";
+
+            if(values.userName==='')
+                usernameError="This field is required";
+            if(values.password==='')
+                passwordError="This field is required";
+
+            
+            setErrors({
+                username:usernameError,
+                password:passwordError
+            });
+            return;
         }
         console.log(values);
         postData(baseAddress,values).then(x=>{
@@ -52,7 +71,9 @@ const LoginForm = ({loginFunct,setActor}) => {
                 }
                 else
                 {
-                    alert("Password and the username doesn't match");
+                    setErrors({
+                        final:"* Username or password is incorrect"
+                    });
                 }
 
             })
@@ -67,7 +88,10 @@ const LoginForm = ({loginFunct,setActor}) => {
                 </Form.Select>
                 <Form.Group className={`mb-3`}>
                     <Form.Label>Username</Form.Label>
-                    <Form.Control type="text" onChange={handleChange} name="userName" value={values.userName} placeholder="Username" />
+                    <Form.Control type="text" onChange={handleChange} name="userName" value={values.userName} placeholder="Username" isInvalid={!!errors.username}/>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.username}
+                    </Form.Control.Feedback>
                 </Form.Group>
                 {/* <Form.Group className={`mb-3 ${values.actor==="student"?"d-none":""}`}>
                     <Form.Label>Department ID</Form.Label>
@@ -75,9 +99,18 @@ const LoginForm = ({loginFunct,setActor}) => {
                 </Form.Group> */}
                 <Form.Group className="mb-3">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" onChange={handleChange} name="password" value={values.password}  placeholder="Password" />
+                    <Form.Control type="password" onChange={handleChange} name="password" value={values.password}  placeholder="Password" isInvalid={!!errors.password}/>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.password}
+                    </Form.Control.Feedback>
                 </Form.Group>
-                <Button variant="primary" type="submit">
+                <Form.Group className="position-absolute">
+                    <Form.Control className="d-none" isInvalid={!!errors.final}/>
+                    <Form.Control.Feedback type="invalid">
+                        {errors.final}
+                    </Form.Control.Feedback>
+                </Form.Group>
+                <Button variant="primary" type="submit" className="mt-4">
                     Submit
                 </Button>
             </Form>
