@@ -109,7 +109,6 @@ class studentDao(object):
         self.__cur.execute("select deptid, name from department")
         return self.__cur.fetchall()
 
-
     def __del__(self):
         self.__cur.close()
         self.__db.close()
