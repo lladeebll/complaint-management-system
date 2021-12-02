@@ -26,20 +26,21 @@ def getDescriptions():
 def editStatus():
     if request.method == 'GET':
         statuses = [
-            {'pending': 'secondary'},
-            {'onProcess': 'info'},
-            {'resolved': 'success'},
-            {'rejected': 'danger'}
+            ['pending', 'secondary'],
+            ['onProcess', 'info'],
+            ['resolved', 'success'],
+            ['rejected', 'danger']
         ]
         return jsonify(statuses), 200
 
     data = request.get_json()
-    id = data['id']
+    id = data['complaint_id']
     status = data['status']
-    dep = departmentDao()
-    done = dep.updateStatus(id, status)
-    del dep
+    done = app.department.editStatus(id, status)
     if done: 
+        dep = departmentDao()
+        dep.updateStatus(id, status)
+        del dep
         return jsonify({'message': 'Status updated successfully'}), 200
     else:
         return jsonify({'message': 'Couldnt Edit status'}), 400
