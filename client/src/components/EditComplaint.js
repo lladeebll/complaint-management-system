@@ -62,32 +62,6 @@ const EditComplaint = (props) => {
         }
         return response.json(); // parses JSON response into native JavaScript objects
       }
-    // async function getDepartments(url="http://localhost:5001/api/student/addcomplaint") {
-    //     // Default options are marked with *
-    //     const response = await fetch(url, {
-    //       method: 'GET', // *GET, POST, PUT, DELETE, etc.
-    //       headers: {
-    //         // 'Content-Type': 'application/json',
-    //         'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-
-    //         // 'Content-Type': 'application/x-www-form-urlencoded',
-    //       },
-    //     //   body: JSON.stringify(data) // body data type must match "Content-Type" header
-    //     });
-    //     if(response.status!==200)
-    //     {
-    //         routeLogin();
-    //     }
-    //     return response.json(); // parses JSON response into native JavaScript objects
-    //   }
-
-    //   const initFunct =   async   ()  =>  {
-    //         let res   =   await   getDepartments();
-    //         setDepartments(res);
-
-    //   }
-
-    
 
     useEffect(() => {
         if(!localStorage.getItem('accessToken'))

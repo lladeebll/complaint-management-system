@@ -32,7 +32,7 @@ def addComplaint():
 
     userId = get_jwt_identity()
     data = request.get_json()
-    c = complaint(None, data['title'], data['description'], "waiting", None,'', -1, data['depId'], userId, None) 
+    c = complaint(None, data['title'], data['description'], "pending", None,'', -1, data['depId'], userId, None) 
     st.addComplaint(c)
     app.student.addComplaint(c)
     del st

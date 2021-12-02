@@ -31,7 +31,7 @@ const EditStatusComponent = ({complaint,logoutFunct,logID}) => {
         setShow(false);
         // console.log(values);
         let obj={
-            id:complaint.id,
+            complaint_id:complaint.id,
             status:values.status
         }
         let res =   await   postEditStatus('http://localhost:5001/api/department/editstatus',obj)

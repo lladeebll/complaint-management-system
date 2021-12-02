@@ -16,16 +16,12 @@ const HomePage = ({logoutFunct,actor}) => {
       }
 
     async function getComplaint(url=actor==='student'?"http://localhost:5001/api/student/getcomplaints":"http://localhost:5001/api/department/getcomplaints") {
-        // Default options are marked with *
         const response = await fetch(url, {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
           headers: {
-            // 'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
 
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-        //   body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
         
         if(response.status===200)
@@ -40,16 +36,12 @@ const HomePage = ({logoutFunct,actor}) => {
       }
 
           async function getDepartments(url="http://localhost:5001/api/student/addcomplaint") {
-        // Default options are marked with *
         const response = await fetch(url, {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
           headers: {
-            // 'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
 
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
-        //   body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
         return response.json(); // parses JSON response into native JavaScript objects
       }

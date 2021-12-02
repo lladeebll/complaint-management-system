@@ -42,7 +42,6 @@ const ComplaintPage = ({logoutFunct,actor}) => {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
-            // 'Content-Type': 'application/x-www-form-urlencoded',
           },
           body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
@@ -68,7 +67,7 @@ const ComplaintPage = ({logoutFunct,actor}) => {
             <h2 className="pl-0 mt-4">{complaint.title}</h2>
             {complaint.description}
             {actor==='student'&&<EditComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/>}
-            {actor==='student'&&complaint.status==='rectified'&&<RatingComponent/>}
+            {actor==='student'&&complaint.status==='resolved'&&<RatingComponent  complaint={complaint} routeLogin={()=>routeLogin()}/>}
             {actor==='department'&&<EditStatusComponent complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/> }
         </>
 

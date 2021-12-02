@@ -41,25 +41,32 @@
   }
 
 
-  .rectified .status-icon{
+  .resolved .status-icon{
     background-color: rgb(31, 219, 31);
   }
-  .waiting .status-icon{
+  .pending .status-icon{
     background-color: rgb(59, 209, 255);
   }
   .rejected .status-icon{
     background-color: rgb(244, 101, 101);
   }
+  .onProcess .status-icon{
+    background-color: rgb(242, 244, 101);
+  }
 
-  .rectified .status-text:after{
+  .resolved .status-text:after{
     content: "Rectified";
   }
-  .waiting .status-text:after{
+  .pending .status-text:after{
     content: "Pending";
   }
   .rejected .status-text:after{
     content: "Rejected";
   }
+  .onProcess .status-text:after{
+    content: "On Process";
+  }
+
   /* .right-align
   {
     justify-self: end;
