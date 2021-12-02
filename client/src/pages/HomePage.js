@@ -78,8 +78,8 @@ const HomePage = ({logoutFunct,actor}) => {
                 <Col sm={8}><SearchComponent/></Col>
                 <Col className="d-flex justify-content-end"><FilterComponent/></Col>
             </Row>
-            {actor==='student'&&<AddComplaint departments={departments}/>}
-            <ComplaintList list={list}/>
+            {actor==='student'&&<AddComplaint initialCall={()=>initialCall()} departments={departments} routeLogin={()=>routeLogin()}/>}
+            <ComplaintList  actor={actor} list={list}  initialCall={()=>initialCall()} routeLogin={()=>routeLogin()}/>
         </>
 
     )

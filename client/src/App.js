@@ -20,7 +20,7 @@ function App() {
             <Routes>
               <Route path='/register' element={<RegistrationPage loginFunct={()=>{setlog(1);localStorage.setItem('log',1)}} setActor={(actor)=>setActor(actor)}/>} /> 
               <Route path='/home/' element={<HomePage logoutFunct={()=>{setlog(0);localStorage.clear()}} actor={actor}/>} /> 
-              <Route path='/home/complaint' element={<ComplaintPage logoutFunct={()=>{setlog(0);localStorage.clear()}}/>} />
+              <Route path='/home/complaint' element={<ComplaintPage logoutFunct={()=>{setlog(0);localStorage.clear()}} actor={actor}/>} />
               <Route path='/'  element={<LoginPage  loginFunct={()=>{setlog(1);localStorage.setItem('log',1)}}  setActor={(actor)=>setActor(actor)}/>} />    
             </Routes>
           </Container>

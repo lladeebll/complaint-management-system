@@ -5,10 +5,10 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from "react-router";
 
-const ComplaintPage = (props) => {
+const ComplaintPage = ({logoutFunct,actor}) => {
     const navigate  =   useNavigate()
     function routeLogin() {
-        props.logoutFunct();
+        logoutFunct();
         navigate("../../", { replace: true });
       }
     let initFunct=() => {
@@ -20,7 +20,7 @@ const ComplaintPage = (props) => {
         console.log(id);
         if(id!==0)
         {
-           let res  =   await postDescription('http://localhost:5001/api/student/getdescriptions',{complaint_id:id})
+           let res  =   await postDescription(actor==='student'?'http://localhost:5001/api/student/getdescriptions':'http://localhost:5001/api/department/getdescriptions',{complaint_id:id})
            console.log(res);
            setComplaint({
                depId:res.depId,
@@ -61,12 +61,13 @@ const ComplaintPage = (props) => {
         logID()
     }, [id])
 
+
     return (
         <>
             <h2 className="pl-0 mt-4">{complaint.title}</h2>
             {complaint.description}
-            <EditComplaint complaint={complaint} logoutFunct={()=>props.logoutFunct()} logID={()=>logID()}/>
-            <RatingComponent/>
+            {actor==='student'&&<EditComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/>}
+            {actor==='student'&&complaint.status==='rectified'&&<RatingComponent/>}
         </>
 
     )

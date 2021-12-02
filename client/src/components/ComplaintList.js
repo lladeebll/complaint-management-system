@@ -8,12 +8,20 @@ import '../styles/ComplaintList.css'
 
 
 
-const ComplaintList = ({list}) => {
+const ComplaintList = ({actor,  list,initialCall,routeLogin}) => {
 
     const deleteFunct=  async   (id)=>{
         console.log(id);
         let res =   await   postDelete('http://localhost:5001/api/student/deletecomplaint',{id:id})
         console.log(res);
+        if(res.message!=='Complaint deleted successfully')
+        {
+            routeLogin();
+        }
+        else
+        {
+            initialCall();
+        }
     }
     async function postDelete(url, data) {
         // Default options are marked with *
@@ -41,7 +49,7 @@ const ComplaintList = ({list}) => {
                                     <Link className="col-8" to={`/home/complaint?id=${complaint['complaint ID: ']}`} className="text-decoration-none">
                                         <ListItem className="col-8" key={complaint['complaint ID: ']} complaint={complaint} />
                                     </Link>
-                                    <Button className="col-2" variant="danger" onClick={()=>deleteFunct(complaint['complaint ID: '])}>Hello</Button>
+                                    {actor==='student'&&<Button className="col-2" variant="danger" onClick={()=>deleteFunct(complaint['complaint ID: '])}>Delete</Button>}
                                 </div>
                             </div>
 

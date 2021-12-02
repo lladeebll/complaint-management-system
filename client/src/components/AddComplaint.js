@@ -4,7 +4,7 @@ import { Form, Button, Modal, FloatingLabel } from 'react-bootstrap';
 import  {   useEffect} from 'react';
 
 
-const AddComplaint = ({departments}) => {
+const AddComplaint = ({initialCall,departments,routeLogin}) => {
 
     async function postComplaint(url="http://localhost:5001/api/student/addcomplaint",data) {
         // Default options are marked with *
@@ -18,6 +18,11 @@ const AddComplaint = ({departments}) => {
           },
           body: JSON.stringify(data) // body data type must match "Content-Type" header
         });
+        if(response.status!==200)
+        {
+            routeLogin();
+            return null;
+        }
         return response.json(); // parses JSON response into native JavaScript objects
       }
     useEffect(() => {
@@ -56,9 +61,17 @@ const AddComplaint = ({departments}) => {
         let res =   await   postComplaint("http://localhost:5001/api/student/addcomplaint",values);
         console.log(res);
         setShow(false);
-        if(res.message!=='Complaint added successfully')
+        if(res!==null)
         {
-            alert('Task Couldn\'t be added');
+
+            if(res.message!=='Complaint added successfully')
+            {
+                alert('Task Couldn\'t be added');
+            }
+            else
+            {
+                initialCall();
+            }
         }
     }
     return (
