@@ -26,10 +26,10 @@ def getDescriptions():
 def editStatus():
     if request.method == 'GET':
         statuses = [
-            {'pending': 'secondary'},
-            {'onProcess': 'info'},
-            {'resolved': 'success'},
-            {'rejected': 'danger'}
+            ['pending', 'secondary'],
+            ['onProcess', 'info'],
+            ['resolved', 'success'],
+            ['rejected', 'danger']
         ]
         return jsonify(statuses), 200
 

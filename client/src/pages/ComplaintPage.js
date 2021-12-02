@@ -4,6 +4,7 @@ import Complaints from '../constants/complaints.json';
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom'
 import { useNavigate } from "react-router";
+import EditStatusComponent from "../components/EditStatusComponent";
 
 const ComplaintPage = ({logoutFunct,actor}) => {
     const navigate  =   useNavigate()
@@ -68,6 +69,7 @@ const ComplaintPage = ({logoutFunct,actor}) => {
             {complaint.description}
             {actor==='student'&&<EditComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/>}
             {actor==='student'&&complaint.status==='rectified'&&<RatingComponent/>}
+            {actor==='department'&&<EditStatusComponent complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/> }
         </>
 
     )
