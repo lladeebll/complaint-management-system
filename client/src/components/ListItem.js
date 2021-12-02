@@ -10,7 +10,7 @@ const ListItem = ({complaint,deleteFunct}) => {
            <div className={"complaint-details mt-1 "+complaint['status: ']}>
            <div className="complaint-status"><div className="status-icon"></div><div className="status-text"></div></div>
            </div>
-           <Button variant="danger" onClick={()=>{deleteFunct(complaint['complaint ID'])}} className="right-align">Delete</Button>
+           {/* <Button variant="danger" onClick={()=>{deleteFunct(complaint['complaint ID'])}} className="right-align">Delete</Button> */}
        </div>
     )
 }
