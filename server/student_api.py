@@ -44,9 +44,9 @@ def editComplaint():
     id = get_jwt_identity()
     st = studentDao()
     data = request.get_json()
-    edited = app.student.editComplaint(id, data['description']) 
+    edited = app.student.editComplaint(data['complaint_id'], data['description']) 
     if edited:
-        st.updateComplaint(id, data['description'])
+        st.updateComplaint(data['complaint_id'], data['description'])
         del st
         return jsonify({'message': 'Complaint edited successfully'}), 200
     else:

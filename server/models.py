@@ -255,6 +255,12 @@ class department(object):
                 count += 1
         return count
 
+    def getComplaintDetails(self, complaint_id):
+        for complaint in self.__complaints:
+            if complaint.getId() == complaint_id:
+                return complaint.jsonObj()
+        return None
+
     def jsonObj(self):
         return jsonify({
             "dep_id": self.__dep_id,
