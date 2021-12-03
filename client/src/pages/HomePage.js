@@ -27,7 +27,7 @@ const HomePage = ({logoutFunct,actor}) => {
     const [departments, setdepartments] = useState([[]]);
     function routeLogin() {
         logoutFunct();
-        navigate("../", { replace: true });
+        // navigate("../", { replace: true });
       }
 
   async function nameChange(e){

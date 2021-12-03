@@ -16,7 +16,7 @@ const NavBar = ({log,logoutFunct}) => {
           </Nav>}
           {log&&
             <Nav>
-              <Nav.Link as={Link} onClick={()=>logoutFunct()} to="/">Logout</Nav.Link>
+              <Nav.Link as={Link} onClick={async()=>await logoutFunct()} to="/">Logout</Nav.Link>
             </Nav>
           }
         </Navbar.Collapse>

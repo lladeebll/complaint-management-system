@@ -58,7 +58,7 @@ const LoginForm = ({loginFunct,setActor}) => {
         }
         console.log(values);
         postData(baseAddress,values).then(x=>{
-                if(x.variant==='success')
+                if(x?.variant==='success')
                 {
                     // accessToken=x.accessToken;
                     console.log(x);
