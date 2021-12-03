@@ -101,8 +101,9 @@ class studentDao(object):
         self.__cur.execute("update department set rating = %s, complaintshandled = %s where deptid = %s", (rating, complaintshandled, deptId))
         self.__db.commit()
 
-    def updateFeedback(self, complaintId, feedback, stars):
-        self.__cur.execute("update complaint set feedback = %s, stars = %s where complaintId = %s", (feedback, stars, complaintId))
+    def resubmitComplaint(self, complaintId, feedback):
+        status = "pending"
+        self.__cur.execute("update complaint set feedback = %s, status = %s where complaintId = %s", (feedback, status, complaintId))
         self.__db.commit() 
 
     def getDepartments(self):
