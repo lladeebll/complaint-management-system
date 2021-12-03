@@ -1,16 +1,19 @@
-import {Row, Col} from 'react-bootstrap';
+import {Row, Col, OverlayTrigger, Tooltip} from 'react-bootstrap';
 import AddComplaint from "../components/AddComplaint";
 import ComplaintList from "../components/ComplaintList";
 import SearchComponent from "../components/SearchComponent";
 import FilterComponent from "../components/FilterComponent";
+import ReactStars from "react-rating-stars-component";
 import { useEffect,useState } from 'react';
 import { useNavigate } from 'react-router';
 
 const HomePage = ({logoutFunct,actor}) => {
     const navigate  =   useNavigate()
     const [list, setlist] = useState({
-      "complaints":[]
+      "complaints":[],
+      "avgRating":0
     });
+    const [rating,setrating] = useState(false,);
     const [search,setsearch] = useState("",);
     const [filter,setfilter] = useState({
       pending:true,
@@ -91,6 +94,7 @@ const HomePage = ({logoutFunct,actor}) => {
         let list1;
         list1 =  await getComplaint();
         setlist(list1);
+        setrating(true);
         setfilteredlist(list1);
         if(actor==='student')
         {
@@ -105,6 +109,7 @@ const HomePage = ({logoutFunct,actor}) => {
     useEffect(()=>{
       filterComplaints();
     }, [search,filter])
+    
     return (
         <>
             <Row className="mt-4">
@@ -112,6 +117,20 @@ const HomePage = ({logoutFunct,actor}) => {
                 <Col className="d-flex justify-content-end"><FilterComponent statusChange={statusChange}/></Col>
             </Row>
             {actor==='student'&&<AddComplaint initialCall={()=>initialCall()} departments={departments} routeLogin={()=>routeLogin()}/>}
+            {rating&&actor==='department'&&
+            <>
+              <OverlayTrigger key="1" placement="right" overlay={
+                  <Tooltip>
+                    {list.avgRating.toFixed(2)}
+                  </Tooltip>
+                }
+              >
+              <div className="d-flex justify-content-end">
+                <b className="m-2">Rating</b>
+                <ReactStars count={5} value={list.avgRating.toFixed(2)} edit={false} isHalf={true} size={24} activeColor="#ffd700" />
+              </div>
+              </OverlayTrigger>
+            </>}
             {(filteredlist.complaints.length&&<ComplaintList  actor={actor} list={filteredlist} />) ||
             <i>No Data found</i>}
             

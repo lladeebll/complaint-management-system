@@ -94,7 +94,7 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
         Add Complaint
         </Button>
         </div>
-        <Modal show={show} onHide={handleClose} centered>
+        <Modal show={show} onHide={handleClose} centered size="xl">
             <Form onSubmit={onSubmit}>
                 <Modal.Header closeButton>
                 <Modal.Title>Add Complaint</Modal.Title>
@@ -122,7 +122,7 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
                         </FloatingLabel>
                     </Form.Group>
                     <FloatingLabel label="Description">
-                        <Form.Control as="textarea" name="description" value={values.description} onChange={handleChange} placeholder="Description"style={{ height: '100px' }} isInvalid={!!errors.description}/>
+                        <Form.Control as="textarea" name="description" value={values.description} onChange={handleChange} placeholder="Description"style={{ height: '200px' }} isInvalid={!!errors.description}/>
                         <Form.Control.Feedback type="invalid">
                         {errors.description}
                         </Form.Control.Feedback>

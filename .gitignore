@@ -1,9 +1,5 @@
 client/node_modules
 client/build
-<<<<<<< HEAD
-__pycache__/
 venv
-=======
 __pycache__
 server/__pycache__
->>>>>>> ffb9ffa (Added end point to resubmit a complaint)

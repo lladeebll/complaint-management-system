@@ -70,7 +70,7 @@ const ComplaintPage = ({logoutFunct,actor}) => {
     return (
         <>
             <BackButton/>
-            <div className="w-50 m-auto">
+            <div className="w-75 m-auto">
             <h2 className="pl-0 my-4">{complaint.title}<span className={"title-status "+complaint.status}></span></h2>
             <p>
             {complaint.description}

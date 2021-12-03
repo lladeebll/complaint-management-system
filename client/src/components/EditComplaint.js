@@ -100,7 +100,7 @@ const EditComplaint = (props) => {
                         </FloatingLabel>
                     </Form.Group> */}
                     <FloatingLabel label="Description">
-                        <Form.Control as="textarea" name="description" value={values.description} onChange={handleChange} placeholder="Description"style={{ height: '100px' }}/>
+                        <Form.Control as="textarea" name="description" value={values.description} onChange={handleChange} placeholder="Description"style={{ height: '200px' }}/>
                     </FloatingLabel>
                 </Modal.Body>
                 <Modal.Footer>
