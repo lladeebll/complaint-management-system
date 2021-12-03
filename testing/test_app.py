@@ -120,6 +120,46 @@ def test_getComplaints(client):
     response = client.get(f'{url}/api/department/getcomplaints', headers= header3)
     assert response.status_code == 200
     client.post(f'{url}/logout', data = json.dumps({"actor":"department"}), headers= header3)
+    
+def test_addcomplaint(client):
+    header1 = {
+        'Content-Type': 'application/json'
+    }
+
+    student = {
+        'userName': 'testuser1',
+        'password': 'test',
+        'actor': 'student'
+    }
+
+    response = client.post(f'{url}/login', data= json.dumps(student), headers= header1)
+    token = response.json['accessToken']
+
+    header2 = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {token}'
+    }
+
+    response = client.get(f'{url}/api/student/addcomplaint', data= json.dumps({'complaint':'test'}), headers= header2)
+    assert response.status_code == 200
+    deps = [x[0] for x in response.get_json()]
+    print(deps)
+    for i in range(n):
+        complaint = {
+            'title': faker.sentence(),
+            'description': faker.text(max_nb_chars=2000),
+            'depId': random.choice(deps)
+        }
+
+        response = client.post(f'{url}/api/student/addcomplaint', data= json.dumps(complaint), headers= header2)
+        assert response.status_code == 200
+
+
+
+
+
+
+
 
 
 
