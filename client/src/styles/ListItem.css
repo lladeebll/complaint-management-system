@@ -55,7 +55,7 @@
   }
 
   .resolved .status-text:after{
-    content: "Rectified";
+    content: "Resolved";
   }
   .pending .status-text:after{
     content: "Pending";

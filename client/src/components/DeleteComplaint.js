@@ -33,11 +33,12 @@ const DeleteComplaint = (props) => {
         console.log(res);
         if(res.message!=='Complaint deleted successfully')
         {
-            routeHome();
+            
+            routeLogin();
         }
         else
         {
-            routeLogin();
+            routeHome();
         }
     }
     async function postDelete(url, data) {

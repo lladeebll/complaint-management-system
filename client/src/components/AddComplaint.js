@@ -34,45 +34,58 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
         depId:"",
         description:""
     })
+    const [errors,setErrors] = useState({
+        department:"",
+        title:"",
+        description:""
+    })
     const [show, setShow] = useState(false);
 
     const handleClose = () => {
         setShow(false);
+        setErrors({
+            department:"",
+            title:"",
+            description:""
+        });
     }
     const handleShow = () => setShow(true);
 
     const onSubmit   =   async  (e)  =>
     {
-        if(values.depId==='')
-        {
-            alert('Select proper Department');
+        let departmentError="",titleError ="",descriptionError ="";
+
+        if(values.depId==='' || values.title==='' || values.description===''){
+            if(values.depId==='')
+                departmentError="Please select any department";
+            if(values.title==='')
+                titleError="This field is required";
+            if(values.description==='')
+                descriptionError="This field is required";
+
+            setErrors({
+                department:departmentError,
+                title:titleError,
+                description:descriptionError
+            });
             e.preventDefault();
-            return
+            return;
 
         }
-        if(values.title==='')
-        {
-            alert('Enter proper Title');
-            e.preventDefault();
-            return
-        }
-        e.preventDefault();
-        // console.log(values);
-        let res =   await   postComplaint("http://localhost:5001/api/student/addcomplaint",values);
-        console.log(res);
-        setShow(false);
-        if(res!==null)
-        {
 
-            if(res.message!=='Complaint added successfully')
+        else{
+            
+            // console.log(values);
+            let res =   await   postComplaint("http://localhost:5001/api/student/addcomplaint",values);
+            console.log(res);
+            setShow(false);
+            if(res!==null)
             {
-                alert('Task Couldn\'t be added');
-            }
-            else
-            {
+    
                 initialCall();
             }
         }
+        
     }
     return (
         <>
@@ -87,8 +100,8 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
                 <Modal.Title>Add Complaint</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <FloatingLabel label="Department">
-                        <Form.Select className="mb-3" name="depId" value={values.depId} onChange={handleChange}>
+                    <FloatingLabel label="Department" className="mb-3">
+                        <Form.Select name="depId" value={values.depId} onChange={handleChange} isInvalid={!!errors.department}>
                         {/* <option value="1">Sample1</option>
                         <option value="2">Sample2</option> */}
                         <option value="">Select Department</option>
@@ -96,14 +109,23 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
                             <option key={department[0]} value={department[0]}>{department[1]}</option>
                             ))}
                         </Form.Select>
+                        <Form.Control.Feedback type="invalid">
+                        {errors.department}
+                        </Form.Control.Feedback>
                     </FloatingLabel>
                     <Form.Group className="mb-3">
                         <FloatingLabel label="Title">
-                        <Form.Control type="text" onChange={handleChange} name="title" value={values.title}  placeholder="Title" />
+                        <Form.Control type="text" onChange={handleChange} name="title" value={values.title}  placeholder="Title" isInvalid={!!errors.title}/>
+                        <Form.Control.Feedback type="invalid">
+                        {errors.title}
+                        </Form.Control.Feedback>
                         </FloatingLabel>
                     </Form.Group>
                     <FloatingLabel label="Description">
-                        <Form.Control as="textarea" name="description" value={values.description} onChange={handleChange} placeholder="Description"style={{ height: '100px' }}/>
+                        <Form.Control as="textarea" name="description" value={values.description} onChange={handleChange} placeholder="Description"style={{ height: '100px' }} isInvalid={!!errors.description}/>
+                        <Form.Control.Feedback type="invalid">
+                        {errors.description}
+                        </Form.Control.Feedback>
                     </FloatingLabel>
                 </Modal.Body>
                 <Modal.Footer>

@@ -34,3 +34,14 @@ code {
 .container{
   padding: 0px;
 }
+
+.comment{
+  position: relative;
+  padding: 10px 20px;
+  background: #efefef;
+  border-radius: 10px;
+}
+
+.comment p{
+  margin:0;
+}

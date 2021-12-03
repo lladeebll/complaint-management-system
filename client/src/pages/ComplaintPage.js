@@ -19,6 +19,7 @@ const ComplaintPage = ({logoutFunct,actor}) => {
         setId(id1)
     }
     const [complaint, setComplaint] = useState({})
+
     let logID=async()=>{
         console.log(id);
         if(id!==0)
@@ -37,6 +38,8 @@ const ComplaintPage = ({logoutFunct,actor}) => {
         //    console.log(complaint);
         }
     }
+
+
     async function postDescription(url, data) {
         // Default options are marked with *
         const response = await fetch(url, {
@@ -72,13 +75,19 @@ const ComplaintPage = ({logoutFunct,actor}) => {
             <p>
             {complaint.description}
             </p>
+            {complaint.feedback&&
+            <div className="comment">
+                <b>Comments</b>
+                <p>{complaint.feedback}</p>
+            </div>
+            }
             {actor==='student'&&complaint.status==='pending'&&
             <div className="d-flex mt-5 justify-content-end">
                 <EditComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/>
                 <DeleteComplaint complaint={complaint} logoutFunct={()=>logoutFunct()} />
             </div>
             }
-            {actor==='student'&&complaint.status==='resolved'&&<RatingComponent  complaint={complaint} routeLogin={()=>routeLogin()}/>}
+            {actor==='student'&&complaint.status==='resolved'&&<div className="d-flex justify-content-around mt-5"><RatingComponent  complaint={complaint} routeLogin={()=>routeLogin()}/></div>}
             {actor==='department'&&
             <div className="d-flex mt-5 justify-content-end">
                 <EditStatusComponent complaint={complaint} logoutFunct={()=>logoutFunct()} logID={()=>logID()}/> 
