@@ -159,11 +159,11 @@ class student(object):
                 return id 
         return None 
     
-    def giveFeedback(self, complaint_id, feedback, stars):
+    def resubmitComplaint(self, complaint_id, feedback):
         for complaint in self.__complaints:
             if complaint.getId() == complaint_id:
                 complaint.setfeedback(feedback)
-                complaint.setstars(stars)
+                complaint.setStatus("pending")
                 return True
         return False
 

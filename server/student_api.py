@@ -53,6 +53,21 @@ def editComplaint():
         del st
         return jsonify({'message': 'Error editing complaint'}), 400
 
+@api.route('/resubmitcomplaint', methods = ['POST'])
+@jwt_required()
+def resubmitComplaint():
+    data = request.get_json()
+    complaint_id = data['complaint_id']
+    comment = data['comment']
+    if(app.student.resubmitComplaint(complaint_id, comment)):
+        st = studentDao()
+        st.resubmitComplaint(complaint_id, comment)
+        del st
+        return jsonify({'message': 'Feedback given successfully'}), 200
+
+    return jsonify({'message': 'Error giving feedback, can not find complaint'}), 400
+
+
 def deleteComplaint(id, st):
     depId= app.student.deleteComplaint(id)
     if depId:
