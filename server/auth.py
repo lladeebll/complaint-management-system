@@ -86,10 +86,12 @@ def login():
 
     return jsonify(dict(msg = 'Unknown operation', variant = 'danger'))
 
-
-@auth.route('/logout')
+@auth.route('/logout', methods = ['POST'])
 @jwt_required()
 def logout():
-    del app.actor
+    if request.json['actor'] == 'student':
+        del app.student
+    else:
+        del app.department
     return jsonify(dict(msg = 'Successfully logged out!', variant = 'success'))
 

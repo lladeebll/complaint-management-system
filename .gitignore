@@ -1,5 +1,4 @@
 client/node_modules
 client/build
 venv
-__pycache__
-server/__pycache__
+*cache*
