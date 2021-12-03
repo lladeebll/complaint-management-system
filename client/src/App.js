@@ -13,7 +13,7 @@ function App() {
   const [actor, setActor] =useState(localStorage.getItem('actor')||'student')
 
   const logoutPost  = async () =>  {
-    const url='http://localhost:5001/logout'
+    const url='/logout'
     let data={
       actor:localStorage.getItem('actor')
     }

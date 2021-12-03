@@ -24,7 +24,7 @@ const ComplaintPage = ({logoutFunct,actor}) => {
         console.log(id);
         if(id!==0)
         {
-           let res  =   await postDescription(actor==='student'?'http://localhost:5001/api/student/getdescriptions':'http://localhost:5001/api/department/getdescriptions',{complaint_id:id})
+           let res  =   await postDescription(actor==='student'?'/api/student/getdescriptions':'/api/department/getdescriptions',{complaint_id:id})
            console.log(res);
            setComplaint({
                depId:res.depId,

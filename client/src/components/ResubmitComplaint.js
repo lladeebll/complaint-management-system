@@ -38,7 +38,7 @@ const ResubmitComplaint = (props) => {
             complaint_id:props.complaint.id,
             comment:values.comment
         }
-        let res =   await   postResubmit('http://localhost:5001/api/student/resubmitcomplaint',obj)
+        let res =   await   postResubmit('/api/student/resubmitcomplaint',obj)
         console.log(res);
         if(res!==null)
         {

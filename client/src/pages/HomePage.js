@@ -55,7 +55,7 @@ const HomePage = ({logoutFunct,actor}) => {
     }));
   }
 
-    async function getComplaint(url=actor==='student'?"http://localhost:5001/api/student/getcomplaints":"http://localhost:5001/api/department/getcomplaints") {
+    async function getComplaint(url=actor==='student'?"/api/student/getcomplaints":"/api/department/getcomplaints") {
         const response = await fetch(url, {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
           headers: {
@@ -75,7 +75,7 @@ const HomePage = ({logoutFunct,actor}) => {
         }
       }
 
-          async function getDepartments(url="http://localhost:5001/api/student/addcomplaint") {
+          async function getDepartments(url="/api/student/addcomplaint") {
         const response = await fetch(url, {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
           headers: {

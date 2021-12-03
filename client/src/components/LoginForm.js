@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const LoginForm = ({loginFunct,setActor}) => {
     const navigate=useNavigate()
-    const baseAddress='http://localhost:5001/login'
+    const baseAddress='/login'
 
     const [values,  handleChange]   =   useForm({
         userName:"",

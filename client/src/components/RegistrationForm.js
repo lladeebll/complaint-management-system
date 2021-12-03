@@ -8,7 +8,7 @@ import { useState } from "react";
 const RegistrationForm = ({loginFunct,setActor}) => {
     let navigate = useNavigate();
 
-    const baseAddress='http://localhost:5001/register'
+    const baseAddress='/register'
 
     function routeHome() {
         navigate("../home/", { replace: true });

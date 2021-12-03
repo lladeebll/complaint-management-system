@@ -24,7 +24,7 @@ const RatingComponent = ({complaint,routeLogin}) => {
             id:complaint.id,
             stars:rating
         }
-        let res =   await   postRating('http://localhost:5001/api/student/rate',obj);
+        let res =   await   postRating('/api/student/rate',obj);
         console.log(res);
         routeHome();
     }

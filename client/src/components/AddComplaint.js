@@ -6,7 +6,7 @@ import  {   useEffect} from 'react';
 
 const AddComplaint = ({initialCall,departments,routeLogin}) => {
 
-    async function postComplaint(url="http://localhost:5001/api/student/addcomplaint",data) {
+    async function postComplaint(url="/api/student/addcomplaint",data) {
         // Default options are marked with *
         const response = await fetch(url, {
           method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -76,7 +76,7 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
         else{
             
             // console.log(values);
-            let res =   await   postComplaint("http://localhost:5001/api/student/addcomplaint",values);
+            let res =   await   postComplaint("/api/student/addcomplaint",values);
             console.log(res);
             setShow(false);
             if(res!==null)

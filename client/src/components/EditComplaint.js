@@ -37,7 +37,7 @@ const EditComplaint = (props) => {
             complaint_id:props.complaint.id,
             description:values.description
         }
-        let res =   await   postEdit('http://localhost:5001/api/student/editcomplaint',obj)
+        let res =   await   postEdit('/api/student/editcomplaint',obj)
         console.log(res);
         if(res!==null)
         {

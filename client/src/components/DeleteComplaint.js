@@ -28,7 +28,7 @@ const DeleteComplaint = (props) => {
 
     const deleteFunct=  async   (id)=>{
         console.log(id);
-        let res =   await   postDelete('http://localhost:5001/api/student/deletecomplaint',{id:id});
+        let res =   await   postDelete('/api/student/deletecomplaint',{id:id});
         setShow(false);
         console.log(res);
         if(res.message!=='Complaint deleted successfully')

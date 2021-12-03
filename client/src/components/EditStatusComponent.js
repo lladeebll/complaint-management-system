@@ -34,7 +34,7 @@ const EditStatusComponent = ({complaint,logoutFunct,logID}) => {
             complaint_id:complaint.id,
             status:values.status
         }
-        let res =   await   postEditStatus('http://localhost:5001/api/department/editstatus',obj)
+        let res =   await   postEditStatus('/api/department/editstatus',obj)
         console.log(res);
         if(res!==null)
         {
@@ -61,7 +61,7 @@ const EditStatusComponent = ({complaint,logoutFunct,logID}) => {
         return response.json(); // parses JSON response into native JavaScript objects
       }
 
-      async function getStatus(url="http://localhost:5001/api/department/editstatus") {
+      async function getStatus(url="/api/department/editstatus") {
         // Default options are marked with *
         const response = await fetch(url, {
           method: 'GET', // *GET, POST, PUT, DELETE, etc.
