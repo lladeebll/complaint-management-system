@@ -53,6 +53,7 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
 
     const onSubmit   =   async  (e)  =>
     {
+	    e.preventDefault();
         let departmentError="",titleError ="",descriptionError ="";
 
         if(values.depId==='' || values.title==='' || values.description===''){
@@ -68,7 +69,6 @@ const AddComplaint = ({initialCall,departments,routeLogin}) => {
                 title:titleError,
                 description:descriptionError
             });
-            e.preventDefault();
             return;
 
         }
